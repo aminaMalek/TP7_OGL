@@ -8,6 +8,13 @@ pipeline {
                 // Lancement des tests unitaires.
                 bat "./gradlew test"
             }
+
+            post {
+                always {
+                    // Archivage des résultats des tests unitaires.
+                    junit 'build/test-results/test/*.xml'
+                }
+            }
         }
     }
 }

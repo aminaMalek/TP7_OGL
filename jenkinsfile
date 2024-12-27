@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Test') {
+        stage('Build') {
             steps {
                 // Lancement des tests unitaires.
                 bat "./gradlew build"

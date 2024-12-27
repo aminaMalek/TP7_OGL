@@ -16,5 +16,13 @@ pipeline {
                 }
             }
         }
+
+        stage('SonarQube analysis') {
+            steps {
+                // Lancement de l'analyse SonarQube.
+                bat "./gradlew sonar"
+            }
+        }
+
     }
 }

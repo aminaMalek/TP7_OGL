@@ -17,12 +17,12 @@ pipeline {
             }
         }
 
+        // Analyse SonarQube.
         stage('SonarQube analysis') {
-            steps {
-                // Lancement de l'analyse SonarQube.
-                bat "./gradlew sonar"
+            withSonarQubeEnv('sonarqube') {
+                 bat "./gradlew sonar"
             }
-        }
 
+        }
     }
 }

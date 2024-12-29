@@ -1,5 +1,4 @@
 pipeline {
-
     agent any
 
     stages {
@@ -8,7 +7,6 @@ pipeline {
                 // Lancement des tests unitaires.
                 bat "./gradlew test"
             }
-
             post {
                 always {
                     // Archivage des résultats des tests unitaires.
@@ -17,12 +15,15 @@ pipeline {
             }
         }
 
-        // Analyse SonarQube.
         stage('SonarQube analysis') {
-            withSonarQubeEnv('sonarqube') {
-                 bat "./gradlew sonar"
+            steps {
+                script {
+                    withSonarQubeEnv('sonarqube') {
+                        // Exécution de l'analyse SonarQube.
+                        bat "./gradlew sonar"
+                    }
+                }
             }
-
         }
     }
 }

@@ -26,5 +26,14 @@ pipeline {
             }
         }
 
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    // Vérification de la qualité du code.
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
     }
 }

@@ -26,7 +26,5 @@ pipeline {
             }
         }
 
-        // Quality gate
-
     }
 }

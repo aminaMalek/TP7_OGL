@@ -11,7 +11,7 @@
         "steps": [
           {
             "result": {
-              "duration": 1981700,
+              "duration": 1095600,
               "status": "passed"
             },
             "line": 3,
@@ -24,7 +24,7 @@
         ]
       },
       {
-        "start_timestamp": "2024-12-27T15:12:47.513Z",
+        "start_timestamp": "2025-01-04T20:35:48.630Z",
         "line": 5,
         "name": "Determinant",
         "description": "",
@@ -34,8 +34,9 @@
         "steps": [
           {
             "result": {
-              "duration": 1078600,
-              "status": "passed"
+              "error_message": "java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 2\r\n\tat com.example.model.Matrix.setValueAt(Matrix.java:53)\r\n\tat com.example.service.MatrixMathematics.createSubMatrix(MatrixMathematics.java:66)\r\n\tat com.example.service.MatrixMathematics.determinant(MatrixMathematics.java:33)\r\n\tat MatrixSteps.iComputeDeterminantOf(MatrixSteps.java:40)\r\n\tat ✽.I compute determinant of(file:///C:/Amina/TP7_OGL/TP7_MALEK/Features/matrix.feature:6)\r\n",
+              "duration": 2099500,
+              "status": "failed"
             },
             "line": 6,
             "name": "I compute determinant of",
@@ -76,8 +77,7 @@
           },
           {
             "result": {
-              "duration": 501800,
-              "status": "passed"
+              "status": "skipped"
             },
             "line": 11,
             "name": "The result of determinant is -9",
@@ -115,7 +115,7 @@
         ]
       },
       {
-        "start_timestamp": "2024-12-27T15:12:47.562Z",
+        "start_timestamp": "2025-01-04T20:35:48.690Z",
         "line": 14,
         "name": "Transpose",
         "description": "",
@@ -162,7 +162,7 @@
           },
           {
             "result": {
-              "duration": 995800,
+              "duration": 1992800,
               "status": "passed"
             },
             "line": 20,
@@ -218,7 +218,7 @@
         ]
       },
       {
-        "start_timestamp": "2024-12-27T15:12:47.566Z",
+        "start_timestamp": "2025-01-04T20:35:48.697Z",
         "line": 26,
         "name": "Inverse",
         "description": "",
@@ -228,7 +228,9 @@
         "steps": [
           {
             "result": {
-              "status": "passed"
+              "error_message": "java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 1\r\n\tat com.example.model.Matrix.setValueAt(Matrix.java:53)\r\n\tat com.example.service.MatrixMathematics.createSubMatrix(MatrixMathematics.java:66)\r\n\tat com.example.service.MatrixMathematics.cofactor(MatrixMathematics.java:82)\r\n\tat com.example.service.MatrixMathematics.inverse(MatrixMathematics.java:125)\r\n\tat MatrixSteps.iComputeInverseOf(MatrixSteps.java:96)\r\n\tat ✽.I compute inverse of(file:///C:/Amina/TP7_OGL/TP7_MALEK/Features/matrix.feature:27)\r\n",
+              "duration": 1176200,
+              "status": "failed"
             },
             "line": 27,
             "name": "I compute inverse of",
@@ -259,7 +261,7 @@
           },
           {
             "result": {
-              "status": "passed"
+              "status": "skipped"
             },
             "line": 31,
             "name": "The result of inverse is",
@@ -311,7 +313,7 @@
         ]
       },
       {
-        "start_timestamp": "2024-12-27T15:12:47.568Z",
+        "start_timestamp": "2025-01-04T20:35:48.700Z",
         "line": 37,
         "name": "Cofactor",
         "description": "",
@@ -321,7 +323,9 @@
         "steps": [
           {
             "result": {
-              "status": "passed"
+              "error_message": "java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 1\r\n\tat com.example.model.Matrix.setValueAt(Matrix.java:53)\r\n\tat com.example.service.MatrixMathematics.createSubMatrix(MatrixMathematics.java:66)\r\n\tat com.example.service.MatrixMathematics.cofactor(MatrixMathematics.java:82)\r\n\tat MatrixSteps.iComputeCofactorOf(MatrixSteps.java:130)\r\n\tat ✽.I compute cofactor of(file:///C:/Amina/TP7_OGL/TP7_MALEK/Features/matrix.feature:38)\r\n",
+              "duration": 996700,
+              "status": "failed"
             },
             "line": 38,
             "name": "I compute cofactor of",
@@ -352,7 +356,7 @@
           },
           {
             "result": {
-              "status": "passed"
+              "status": "skipped"
             },
             "line": 42,
             "name": "The result of cofactor is",

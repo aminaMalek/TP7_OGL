@@ -58,7 +58,7 @@ public class MatrixMathematics {
 		for (int i=0;i<matrix.getNrows();i++) {
 			if (i==excluding_row)
 				continue;
-				r++;
+
 				int c = -1;
 			for (int j=0;j<matrix.getNcols();j++) {
 				if (j==excluding_col)
@@ -117,7 +117,13 @@ public class MatrixMathematics {
 	 * @throws NoSquareException
 	 */
 	public static Matrix inverse(Matrix matrix) throws NoSquareException {
-		return (transpose(cofactor(matrix)).multiplyByConstant(1.0/determinant(matrix)));
+		if(determinant(matrix) == 0) {
+			throw new NoSquareException("The matrix has no inverse");
+		}
+		else
+		{
+			return (transpose(cofactor(matrix)).multiplyByConstant(1.0/determinant(matrix)));
+		}
 	}
 	
 	

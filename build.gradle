@@ -56,6 +56,73 @@ publishing {
     }
 }
 
+slack {
+    publishedPlugin {
+        webHook = "https://hooks.slack.com/services/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"
+
+        attachment {
+            fallback = "New version successfully published."
+            pretext = "New version successfully published."
+            color = "good"
+            field {
+                title = "Module"
+                value = project.name
+                shortValue = true
+            }
+            field {
+                title = "Version"
+                value = project.version
+                shortValue = true
+            }
+        }
+        attachment {
+            fallback = "Another line on sent together."
+            pretext = "Another line on sent together."
+            color = "good"
+            field {
+                title = "Something"
+                value = "Something text"
+            }
+        }
+    }
+    builtSucceed {
+        webHook = "https://hooks.slack.com/services/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"
+
+        attachment {
+            fallback = "Project successfully built."
+            pretext = "Project successfully built."
+            field {
+                title = "Module"
+                value = project.name
+                shortValue = true
+            }
+            field {
+                title = "Version"
+                value = project.version
+                shortValue = true
+            }
+        }
+    }
+}
+
+publish {
+    finalizedBy postPublishedPluginToSlack
+}
+
+sendMail {
+    smtpServer {
+        host "smtp.gmail.com"
+        port 587
+        user "la_malek@esi.dz"
+        password "zasm lapp nzgn yxge"
+    }
+    mail {
+        from "la_malek@esi.dz"
+        to "amina.malek0203@gmail.com"
+    }
+}
+
+
 
 
 

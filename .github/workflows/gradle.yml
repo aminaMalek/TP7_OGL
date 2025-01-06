@@ -7,35 +7,90 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  Test:
+      runs-on: windows-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Set up JDK
+          uses: actions/setup-java@v3
+          with:
+            distribution: 'temurin'
+            java-version: '11'
+        - name: Run Tests
+          run: ./gradlew test
+          
+  Code-Analysis:
+    needs: Test
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
-          
-      - name: Run Tests
-        run: |
-          ./gradlew test
+      - name: Run Static Analysis
+        run: ./gradlew sonar
 
-      - name: SonarQube Analysis
-        run: |
-          ./gradlew sonar 
-          
-      - name: Build & Document
-        run: |
-          ./gradlew build
-          ./gradlew javadoc
+  Code-Quality:
+    needs: Code-Analysis
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Check Quality Gates
+        run: ./gradlew sonarqube
 
+  Build:
+    needs: Code-Quality
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Build Project
+        run: ./gradlew build
+      - name: Generate Documentation
+        run: ./gradlew javadoc
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            build/libs/*.jar
+            build/docs/javadoc/**/*
+
+  Deploy:
+    needs: Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
       - name: Deploy
         run: ./gradlew publish
 
-      - name: Notifications
+  Notification:
+    needs: Deploy
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Send Notifications
         run: |
           ./gradlew postPublishedPluginToSlack
           ./gradlew sendMail

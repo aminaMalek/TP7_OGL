@@ -1,7 +1,9 @@
 plugins {
     id 'java'
     id("org.sonarqube") version "4.4.0.3356"
-
+    id("maven-publish")
+    id("io.github.oleksiiparf.slack-webhook") version "1.0.0"
+    id("de.zebrajaeger.sendMail") version "0.2.2"
 }
 
 group = 'com.example'
@@ -36,8 +38,6 @@ sonar {
 
     }
 }
-
-test.finalizedBy "sonar"
 
 
 

@@ -22,9 +22,6 @@ jobs:
       - name: Run Tests
         run: |
           ./gradlew test
-          
-      - name: Generate Reports
-        run: ./gradlew generateCucumberReports
 
       - name: SonarQube Analysis
         run: |

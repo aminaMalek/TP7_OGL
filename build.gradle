@@ -118,7 +118,8 @@ sendMail {
     }
 }
 
-
-
+publish {
+    finalizedBy postPublishedPluginToSlack
+}
 
 

@@ -20,7 +20,7 @@ pipeline {
                 script {
                     withSonarQubeEnv('sonarqube') {
                         // Exécution de l'analyse SonarQube.
-                        bat "./gradlew sonar"
+                        bat "./gradlew sonar --info"
                     }
                 }
             }

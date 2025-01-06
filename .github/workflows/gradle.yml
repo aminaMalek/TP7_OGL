@@ -31,3 +31,6 @@ jobs:
         run: |
           ./gradlew build
           ./gradlew javadoc
+
+      - name: Deploy
+        run: ./gradlew publish

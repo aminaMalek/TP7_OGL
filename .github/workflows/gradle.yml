@@ -26,3 +26,8 @@ jobs:
       - name: SonarQube Analysis
         run: |
           ./gradlew sonar 
+          
+      - name: Build & Document
+        run: |
+          ./gradlew build
+          ./gradlew javadoc

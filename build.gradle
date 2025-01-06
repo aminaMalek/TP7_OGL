@@ -22,7 +22,6 @@ dependencies {
 
 sonar {
     properties {
-        // property "sonar.login", "squ_a5210c257cae16cddff372df30116f6f5fabce2f"
         property "sonar.projectKey", "com.example:tp5"
         property "sonar.projectName", "tp5"
         property "sonar.skipCompile", "true"
@@ -38,6 +37,25 @@ sonar {
 
     }
 }
+
+publishing {
+    repositories {
+        maven {
+            url = "https://mymavenrepo.com/repo/Zc68yw3vcV22pNUnAtgP/"
+            credentials {
+                username 'myMavenRepo'
+                password '12345678'
+            }
+        }
+    }
+
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
 
 
 

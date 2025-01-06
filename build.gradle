@@ -18,6 +18,26 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
+sonar {
+    properties {
+        property "sonar.login", "squ_a5210c257cae16cddff372df30116f6f5fabce2f"
+        property "sonar.projectKey", "com.example:tp5"
+        property "sonar.projectName", "tp5"
+        property "sonar.skipCompile", "true"
+        property 'sonar.qualitygate.wait', true
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.projectVersion", "1.0"
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.junit.reportPaths", "build/test-results/test"
+        property "sonar.jacoco.reportPaths", "build/jacoco/test.exec"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+
+    }
+}
+
 test.finalizedBy "sonar"
+
 
 

@@ -74,25 +74,17 @@ pipeline {
     }
    post {
         success {
-            slackSend(
+          slackSend(
                 channel: '#build-status',
                 color: 'good',
-                message: "Build SUCCESS",
-                tokenCredentialId: 'slack-token',  
-                username: 'Jenkins-amina',
-                iconEmoji: ':white_check_mark:',
-                notifyCommitters: true,
+                message: "Build SUCCESS"
             )
         }
         failure {
             slackSend(
                 channel: '#build-status',
-                color: 'danger',
-                message: "Build FAILURE",
-                tokenCredentialId: 'slack-token',
-                username: 'Jenkins-amina',
-                iconEmoji: ':x:',
-                notifyCommitters: true,
+                color: 'good',
+                message: "Build FAILURE"
             )
         }
     }

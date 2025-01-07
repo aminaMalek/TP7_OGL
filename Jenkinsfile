@@ -29,10 +29,13 @@ pipeline {
         stage('Quality Gate') {
             steps {
                 script {
-                    timeout(time: 1, unit: 'MINUTES') {
-                        def qg = waitForQualityGate()
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    withSonarQubeEnv('sonarqube') {
+                        // Vérification de la qualité du code.
+                        timeout(time: 1, unit: 'MINUTES') {
+                            def qg = waitForQualityGate()
+                            if (qg.status != 'OK') {
+                                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                            }
                         }
                     }
                 }
@@ -61,22 +64,21 @@ pipeline {
                 bat './gradlew publish'
             }
         }
-    }
 
+        stage('Notification') {
+            steps {
+                echo 'Sending Notifications...'
+                bat './gradlew postPublishedPluginToSlack'
+                bat './gradlew sendMail'
+            }
+        }
+    }
     post {
         success {
-            slackSend(
-                channel: '#build-status',
-                color: 'good',
-                message: "Build SUCCESS"
-            )
+            echo 'Pipeline completed successfully!'
         }
         failure {
-            slackSend(
-                channel: '#build-status',
-                color: 'danger',
-                message: "Build FAILURE"
-            )
+            echo 'Pipeline failed. Please check the logs.'
         }
     }
 }

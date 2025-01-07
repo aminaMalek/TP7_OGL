@@ -84,9 +84,9 @@ sendMail {
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination file("${buildDir}/reports/jacoco/test")
+        xml.required.set(true)
+        csv.required.set(false)
+        html.outputLocation.set(file("${buildDir}/reports/jacoco/test"))
     }
 }
 

@@ -5,7 +5,7 @@ pipeline {
         stage('Test') {
             steps {
                 // Lancement des tests unitaires.
-                bat "./gradlew test"
+                bat './gradlew test'
             }
             post {
                 always {
@@ -15,47 +15,54 @@ pipeline {
             }
         }
 
-        stage('SonarQube analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     withSonarQubeEnv('sonarqube') {
                         // Exécution de l'analyse SonarQube.
-                        bat "./gradlew sonar --info"
+                        bat './gradlew sonar --info'
                     }
                 }
             }
         }
 
-       stage('Build') {
-                   steps {
-                       echo 'Building Project...'
-                       bat './gradlew build'
-                       echo 'Generating Documentation...'
-                       bat './gradlew javadoc'
-                   }
-                   post {
-                       always {
-                           archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
-                           archiveArtifacts artifacts: 'build/docs/javadoc/**/*', fingerprint: true
-                       }
-                   }
-               }
+        stage('Build') {
+            steps {
+                echo 'Building Project...'
+                bat './gradlew build'
+                echo 'Generating Documentation...'
+                bat './gradlew javadoc'
+            }
+            post {
+                always {
+                    // Archivage des artefacts générés.
+                    archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+                    archiveArtifacts artifacts: 'build/docs/javadoc/**/*', fingerprint: true
+                }
+            }
+        }
 
-               stage('Deploy') {
-                   steps {
-                       echo 'Deploying Application...'
-                       bat './gradlew publish'
-                   }
-               }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying Application...'
+                bat './gradlew publish'
+            }
+        }
 
-               stage('Notification') {
-                   steps {
-                       echo 'Sending Notifications...'
-                       bat './gradlew postPublishedPluginToSlack'
-                       bat './gradlew sendMail'
-                   }
-               }
-           }
-
+        stage('Notification') {
+            steps {
+                echo 'Sending Notifications...'
+                bat './gradlew postPublishedPluginToSlack'
+                bat './gradlew sendMail'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Please check the logs.'
+        }
     }
 }

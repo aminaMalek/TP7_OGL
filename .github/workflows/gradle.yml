@@ -93,4 +93,4 @@ jobs:
       - name: Send Notifications
         run: |
           ./gradlew postPublishedPluginToSlack
-          ./gradlew sendMail
+          ./gradlew sendMailNotification

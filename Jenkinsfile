@@ -26,14 +26,36 @@ pipeline {
             }
         }
 
-        stage('Quality Gate') {
-            steps {
+       stage('Build') {
+                   steps {
+                       echo 'Building Project...'
+                       bat './gradlew build'
+                       echo 'Generating Documentation...'
+                       bat './gradlew javadoc'
+                   }
+                   post {
+                       always {
+                           archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+                           archiveArtifacts artifacts: 'build/docs/javadoc/**/*', fingerprint: true
+                       }
+                   }
+               }
 
-                    // Vérification de la qualité du code.
-                    waitForQualityGate abortPipeline: true
+               stage('Deploy') {
+                   steps {
+                       echo 'Deploying Application...'
+                       bat './gradlew publish'
+                   }
+               }
 
-            }
-        }
+               stage('Notification') {
+                   steps {
+                       echo 'Sending Notifications...'
+                       bat './gradlew postPublishedPluginToSlack'
+                       bat './gradlew sendMail'
+                   }
+               }
+           }
 
     }
 }

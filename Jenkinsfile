@@ -72,19 +72,29 @@ pipeline {
             }
         }
     }
-    post {
+   post {
         success {
             slackSend(
                 channel: '#build-status',
                 color: 'good',
-                message: "Build SUCCESS"
+                message: "Build SUCCESS",
+                tokenCredentialId: 'slack-token',  
+                username: 'Jenkins-amina',
+                iconEmoji: ':white_check_mark:',
+                notifyCommitters: true,
+                timestamp: true
             )
         }
         failure {
             slackSend(
                 channel: '#build-status',
                 color: 'danger',
-                message: "Build FAILURE"
+                message: "Build FAILURE",
+                tokenCredentialId: 'slack-token',
+                username: 'Jenkins-amina',
+                iconEmoji: ':x:',
+                notifyCommitters: true,
+                timestamp: true
             )
         }
     }

@@ -4,6 +4,7 @@ plugins {
     id("maven-publish")
     id("io.github.oleksiiparf.slack-webhook") version "1.0.0"
     id("de.zebrajaeger.sendMail") version "0.2.2"
+    id 'jacoco'
 }
 
 group = 'com.example'
@@ -11,13 +12,12 @@ version = '1.0'
 
 repositories {
     mavenCentral()
-
 }
 
 dependencies {
-    testImplementation 'io.cucumber:cucumber-java:6.0.0'
-    testImplementation 'io.cucumber:cucumber-junit:6.0.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'io.cucumber:cucumber-java:7.11.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.11.0'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 sonar {
@@ -25,7 +25,6 @@ sonar {
         property "sonar.projectKey", "com.example:tp5"
         property "sonar.projectName", "tp5"
         property "sonar.skipCompile", "true"
-        property 'sonar.qualitygate.wait', true
         property "sonar.host.url", "http://197.140.142.82:9000"
         property "sonar.projectVersion", "1.0"
         property "sonar.sources", "src/main/java"
@@ -34,7 +33,6 @@ sonar {
         property "sonar.junit.reportPaths", "build/test-results/test"
         property "sonar.jacoco.reportPaths", "build/jacoco/test.exec"
         property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-
     }
 }
 
@@ -43,8 +41,8 @@ publishing {
         maven {
             url = "https://mymavenrepo.com/repo/Zc68yw3vcV22pNUnAtgP/"
             credentials {
-                username 'myMavenRepo'
-                password '12345678'
+                username project.findProperty("myMavenRepoUsername")
+                password project.findProperty("myMavenRepoPassword")
             }
         }
     }
@@ -57,41 +55,45 @@ publishing {
 }
 
 task postPublishedPluginToSlack {
-  doLast {
-    def webhookUrl = 'https://hooks.slack.com/services/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'
-    def message = '{"text": "Project is published! "}'
-
-    // Create the URL object
-    def url = new URL(webhookUrl)
-
-    // Open a connection
-    def connection = url.openConnection() as HttpURLConnection
-    connection.requestMethod = 'POST'
-    connection.setRequestProperty('Content-Type', 'application/json')
-    connection.doOutput = true
-
-    // Send the message as JSON payload
-    connection.outputStream.withWriter { writer ->
-      writer.write(message)
+    doLast {
+        def webhookUrl = project.findProperty("slackWebhookUrl")
+        def message = '{"text": "Project is published!"}'
+        def url = new URL(webhookUrl)
+        def connection = url.openConnection() as HttpURLConnection
+        connection.requestMethod = 'POST'
+        connection.setRequestProperty('Content-Type', 'application/json')
+        connection.doOutput = true
+        connection.outputStream.withWriter { writer -> writer.write(message) }
+        println "Response Code: ${connection.responseCode}"
+        connection.disconnect()
     }
-
-    // Check the response code
-    def responseCode = connection.responseCode
-    println "Response Code: ${responseCode}"
-
-    connection.disconnect()
-  }
 }
 
 sendMail {
     smtpServer {
         host "smtp.gmail.com"
         port 587
-        user "la_malek@esi.dz"
-        password "zasm lapp nzgn yxge"
+        user project.findProperty("smtpUsername")
+        password project.findProperty("smtpPassword")
     }
     mail {
-        from "la_malek@esi.dz"
+        from project.findProperty("smtpUsername")
         to "amina.malek0203@gmail.com"
     }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacoco/test")
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+publish {
+    finalizedBy postPublishedPluginToSlack, sendMail
 }

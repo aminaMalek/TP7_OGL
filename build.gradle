@@ -70,18 +70,25 @@ task postPublishedPluginToSlack {
     }
 }
 
-sendMail {
-    smtpServer {
-        host "smtp.gmail.com"
-        port 587
-        user project.findProperty("smtpUsername")
-        password project.findProperty("smtpPassword")
-    }
-    mail {
-        from project.findProperty("smtpUsername")
-        to "amina.malek0203@gmail.com"
+task sendMailNotification {
+    doLast {
+        sendMail {
+            smtpServer {
+                host = 'smtp.gmail.com'
+                port = 587
+                user = project.findProperty("smtpUsername")
+                password = project.findProperty("smtpPassword")
+            }
+            mail {
+                from = project.findProperty("smtpUsername")
+                to = 'amina.malek0203@gmail.com'
+                subject = 'Build Notification'
+                body = 'Your build has been successfully published.'
+            }
+        }
     }
 }
+
 
 jacocoTestReport {
     reports {
@@ -96,5 +103,5 @@ test {
 }
 
 publish {
-    finalizedBy postPublishedPluginToSlack, sendMail
+    finalizedBy postPublishedPluginToSlack, sendMailNotification
 }

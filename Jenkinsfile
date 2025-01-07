@@ -68,7 +68,7 @@ pipeline {
         stage('Notification') {
             steps {
                 echo 'Sending Notifications...'
-                bat './gradlew sendMail'
+                bat './gradlew sendMailNotification'
             }
         }
     }

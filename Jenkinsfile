@@ -82,7 +82,6 @@ pipeline {
                 username: 'Jenkins-amina',
                 iconEmoji: ':white_check_mark:',
                 notifyCommitters: true,
-                timestamp: true
             )
         }
         failure {
@@ -94,7 +93,6 @@ pipeline {
                 username: 'Jenkins-amina',
                 iconEmoji: ':x:',
                 notifyCommitters: true,
-                timestamp: true
             )
         }
     }

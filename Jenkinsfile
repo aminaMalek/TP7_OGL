@@ -6,6 +6,7 @@ pipeline {
             steps {
                 echo 'Running unit tests...'
                 bat './gradlew test'
+                cucumber '**/reports/*.json'
             }
             post {
                 always {

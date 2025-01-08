@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('sonarqube') {
-                        bat './gradlew sonar --info'
+                        bat './gradlew sonar'
                     }
                 }
             }

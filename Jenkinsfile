@@ -20,6 +20,7 @@ pipeline {
                 script {
                     echo 'Running SonarQube analysis...'
                     withSonarQubeEnv('sonarqube') {
+                        bat './gradlew clear'
                         bat './gradlew sonar --info'
                     }
                 }

@@ -22,7 +22,7 @@ dependencies {
 
 sonar {
     properties {
-        property "sonar.login", "3cb11eb3db7bca5caedd809ff20674bd3d3f2346"
+        property "sonar.login", "6beafbaaff4dcaf702e37a53f1bf0b6c45bd06b4"
         property "sonar.projectKey", "com.example:tp5"
         property "sonar.projectName", "tp5"
         property "sonar.skipCompile", "true"

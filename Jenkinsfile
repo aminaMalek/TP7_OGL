@@ -21,7 +21,7 @@ pipeline {
                     echo 'Running SonarQube analysis...'
                     withSonarQubeEnv('sonarqube') {
                         bat './gradlew clean'
-                        bat './gradlew sonar --info'
+                        bat './gradlew sonar -Dsonar.login=6beafbaaff4dcaf702e37a53f1bf0b6c45bd06b4 -Dsonar.password=admin'
                     }
                 }
             }

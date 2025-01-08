@@ -23,14 +23,13 @@ dependencies {
 sonar {
     properties {
         property "sonar.login", "d4716ae157226b8c317b3fa6d4e1bb044e7e7059"
-        property "sonar.projectKey", "tp5"
         property "sonar.skipCompile", "true"
         property "sonar.host.url", "http://197.140.142.82:9000"
         property "sonar.sources", "src/main/java"
         property "sonar.tests", "src/test/java"
-        property "sonar.junit.reportPaths", "build/test-results/test"
-        property "sonar.jacoco.reportPaths", "build/jacoco/test.exec"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        // property "sonar.junit.reportPaths", "build/test-results/test"
+        // property "sonar.jacoco.reportPaths", "build/jacoco/test.exec"
+        // property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
 

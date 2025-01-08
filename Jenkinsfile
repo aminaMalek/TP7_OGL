@@ -19,7 +19,6 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    echo 'Running SonarQube analysis...'
                     withSonarQubeEnv('sonarqube') {
                         bat './gradlew sonar --info'
                     }
